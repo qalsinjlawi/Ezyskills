@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+         'phone',              // أضف هذا
+    'profile_image',      // وهذا
     ];
 
     /**
@@ -32,6 +34,17 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    // علاقة المستخدم بالتسجيلات
+public function enrollments()
+{
+    return $this->hasMany(Enrollment::class);
+}
+
+// علاقة المستخدم بالرسائل
+public function contactMessages()
+{
+    return $this->hasMany(ContactMessage::class);
+}
 
     /**
      * Get the attributes that should be cast.
