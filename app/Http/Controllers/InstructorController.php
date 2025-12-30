@@ -15,9 +15,11 @@ class InstructorController extends Controller
     }
     
     public function show($id)
-    {
-        $instructor = Instructor::with('courses')->findOrFail($id);
-        
-        return view('instructors.show', compact('instructor'));
-    }
+{
+    $instructor = Instructor::with('courses')
+                           ->where('instructor_id', $id)
+                           ->firstOrFail();
+    
+    return view('instructors.show', compact('instructor'));
+}
 }

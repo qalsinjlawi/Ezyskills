@@ -51,8 +51,7 @@
                                 </div>
                                 <h5 class="card-title">{{ $instructor->full_name }}</h5>
                                 <p class="card-text text-muted">{{ $instructor->title }}</p>
-                                <a href="{{ route('instructors.show', $instructor->id) }}" class="btn btn-primary btn-sm">عرض التفاصيل</a>
-                            </div>
+<a href="{{ route('instructors.show', $instructor->instructor_id) }}" class="btn btn-primary btn-sm">عرض التفاصيل</a>                            </div>
                         </div>
                     </div>
                     @endforeach

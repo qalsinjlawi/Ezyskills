@@ -58,8 +58,7 @@
                                     <div class="card-body">
                                         <h5>{{ $course->title }}</h5>
                                         <p class="text-muted">{{ Str::limit($course->description, 50) }}</p>
-                                        <a href="{{ route('courses.show', $course->id) }}" class="btn btn-primary btn-sm">عرض الدورة</a>
-                                    </div>
+<a href="{{ route('courses.show', $course->course_id) }}" class="btn btn-primary btn-sm">عرض الدورة</a>                                    </div>
                                 </div>
                             </div>
                             @endforeach

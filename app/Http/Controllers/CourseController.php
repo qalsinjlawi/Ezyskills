@@ -16,7 +16,6 @@ class CourseController extends Controller
         return view('courses.index', compact('courses'));
     }
     
-    // عرض تفاصيل دورة واحدة
     public function show($id)
     {
         $course = Course::with('instructor')

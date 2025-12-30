@@ -9,13 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('faqs', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+   public function up()
+{
+    Schema::create('faqs', function (Blueprint $table) {
+        $table->id('faq_id');
+        $table->string('question', 500);
+        $table->text('answer');
+        $table->integer('order_number')->nullable();
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

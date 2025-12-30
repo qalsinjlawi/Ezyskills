@@ -51,8 +51,7 @@
                                 <p class="card-text text-muted">{{ Str::limit($course->description, 80) }}</p>
                                 <p class="text-primary fw-bold">${{ $course->price }}</p>
                                 <p class="text-muted small">المدرب: {{ $course->instructor->full_name }}</p>
-                                <a href="{{ route('courses.show', $course->id) }}" class="btn btn-primary btn-sm w-100">عرض التفاصيل</a>
-                            </div>
+<a href="{{ route('courses.show', $course->course_id) }}" class="btn btn-primary btn-sm w-100">عرض التفاصيل</a>                            </div>
                         </div>
                     </div>
                     @endforeach

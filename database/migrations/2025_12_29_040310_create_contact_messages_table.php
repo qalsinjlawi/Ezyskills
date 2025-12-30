@@ -9,13 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('contact_messages', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+    public function up()
+{
+    Schema::create('contact_messages', function (Blueprint $table) {
+        $table->id('message_id');
+        $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+        $table->string('name', 200);
+        $table->string('email', 255);
+        $table->string('subject', 300)->nullable();
+        $table->text('message');
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.
