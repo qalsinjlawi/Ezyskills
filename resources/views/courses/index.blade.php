@@ -1,77 +1,477 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الدورات - Ezyskills</title>
+    <title>Courses - Ezyskills</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-orange: #FF7A59;
+            --light-orange: #FFB088;
+            --dark-blue: #003D82;
+            --card-blue: #004A99;
+            --bg-light: #F8F9FA;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 40px 0 30px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 0;
+        }
+
+        .page-title span {
+            color: var(--primary-orange);
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-tabs .filter-item {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #6B7280;
+            cursor: pointer;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tabs .filter-item:hover {
+            color: var(--primary-orange);
+        }
+
+        .filter-tabs .filter-item.active {
+            color: var(--primary-orange);
+            border-bottom-color: var(--primary-orange);
+        }
+
+        .filter-select {
+            margin-left: auto;
+        }
+
+        .filter-select select {
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 8px 35px 8px 15px;
+            font-size: 0.9rem;
+            color: #6B7280;
+            background-color: white;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+
+        /* Search Box */
+        .search-box {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-box input {
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 10px 15px;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 122, 89, 0.1);
+        }
+
+        /* Course Card */
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .course-card-header {
+            background: linear-gradient(135deg, var(--card-blue) 0%, #0056b3 100%);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .course-icon {
+            font-size: 4rem;
+            color: white;
+        }
+
+        .course-card-body {
+            padding: 25px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1F2937;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .course-description {
+            color: #6B7280;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #E5E7EB;
+            margin-bottom: 15px;
+        }
+
+        .course-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85rem;
+            color: #6B7280;
+        }
+
+        .course-meta-item i {
+            color: var(--primary-orange);
+            font-size: 0.9rem;
+        }
+
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .course-btn {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--light-orange) 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .course-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 122, 89, 0.3);
+            color: white;
+        }
+
+        /* Pagination */
+        .custom-pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: white;
+            color: #6B7280;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .pagination-item:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        .pagination-item.active {
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #D1D5DB;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: #6B7280;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #9CA3AF;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .filter-tabs {
+                gap: 15px;
+            }
+
+            .filter-select {
+                margin-left: 0;
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            .filter-select select {
+                width: 100%;
+            }
+        }
+
+        /* Custom Icons for Different Courses */
+        .course-card[data-course="angular"] .course-icon::before { content: "🅰️"; }
+        .course-card[data-course="aws"] .course-icon::before { content: "☁️"; }
+        .course-card[data-course="vue"] .course-icon::before { content: "✌️"; }
+        .course-card[data-course="power-bi"] .course-icon::before { content: "📊"; }
+        .course-card[data-course="python"] .course-icon::before { content: "🐍"; }
+        .course-card[data-course="react"] .course-icon::before { content: "⚛️"; }
+        .course-card[data-course="testing"] .course-icon::before { content: "✅"; }
+        .course-card[data-course="c-sharp"] .course-icon::before { content: "C#"; font-size: 3rem; font-weight: bold; }
+    </style>
 </head>
 <body>
-    <!-- Navbar نفس اللي في home -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Header -->
+    @include('includes.header')
+
+    <!-- Page Content -->
+    <section class="page-content">
         <div class="container">
-            <a class="navbar-brand" href="/">Ezyskills</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">الرئيسية</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="/courses">الدورات</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">من نحن</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">التواصل</a></li>
-                    @auth
-                        <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">لوحة التحكم</a></li>
-                    @else
-                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">دخول</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">تسجيل</a></li>
-                    @endauth
-                </ul>
+            <!-- Page Header -->
+            <div class="page-header text-center">
+                <h1 class="page-title">Courses <span>List</span></h1>
             </div>
-        </div>
-    </nav>
 
-    <!-- Courses List -->
-    <section class="py-5">
-        <div class="container">
-            <h1 class="text-center fw-bold mb-5">جميع الدورات</h1>
+            <!-- Search Box -->
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search Bootcamps..." onkeyup="filterCourses()">
+            </div>
 
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-tabs">
+                    <div class="filter-item active" data-filter="all">All</div>
+                    <div class="filter-item" data-filter="opened">Opened</div>
+                    <div class="filter-item" data-filter="coming-soon">Coming Soon</div>
+                    <div class="filter-item" data-filter="archived">Archived</div>
+                    <div class="filter-select">
+                        <select id="sortSelect" onchange="sortCourses()">
+                            <option value="">Sort by Progress Date</option>
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                            <option value="title">Title: A-Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Courses Grid -->
             @if($courses->count() == 0)
-                <div class="text-center py-5">
-                    <p class="lead text-muted">لا توجد دورات متاحة حاليًا. تابعونا قريبًا!</p>
+                <div class="empty-state">
+                    <i class="fas fa-book-open"></i>
+                    <h3>No Courses Available</h3>
+                    <p>Check back soon for new exciting courses!</p>
                 </div>
             @else
-                <div class="row">
+                <div class="row" id="coursesGrid">
                     @foreach($courses as $course)
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $course->title }}</h5>
-                                <p class="card-text text-muted">{{ Str::limit($course->description, 80) }}</p>
-                                <p class="text-primary fw-bold">${{ $course->price }}</p>
-                                <p class="text-muted small">المدرب: {{ $course->instructor->full_name }}</p>
-<a href="{{ route('courses.show', $course->course_id) }}" class="btn btn-primary btn-sm w-100">عرض التفاصيل</a>                            </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 course-item" 
+                         data-title="{{ strtolower($course->title) }}" 
+                         data-price="{{ $course->price }}">
+                        <div class="course-card" data-course="{{ Str::slug($course->title) }}">
+                            <div class="course-card-header">
+                                <div class="course-icon">
+                                    @if(stripos($course->title, 'angular') !== false)
+                                        <i class="fab fa-angular"></i>
+                                    @elseif(stripos($course->title, 'aws') !== false)
+                                        <i class="fab fa-aws"></i>
+                                    @elseif(stripos($course->title, 'vue') !== false)
+                                        <i class="fab fa-vuejs"></i>
+                                    @elseif(stripos($course->title, 'python') !== false)
+                                        <i class="fab fa-python"></i>
+                                    @elseif(stripos($course->title, 'react') !== false)
+                                        <i class="fab fa-react"></i>
+                                    @elseif(stripos($course->title, 'node') !== false)
+                                        <i class="fab fa-node-js"></i>
+                                    @else
+                                        <i class="fas fa-graduation-cap"></i>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="course-card-body">
+                                <h3 class="course-title">{{ $course->title }}</h3>
+                                <p class="course-description">{{ Str::limit($course->description, 100) }}</p>
+                                <div class="course-meta">
+                                    <div class="course-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>{{ $course->duration_hours }}h</span>
+                                    </div>
+                                    <div class="course-meta-item">
+                                        <i class="fas fa-signal"></i>
+                                        <span>{{ ucfirst($course->level) }}</span>
+                                    </div>
+                                </div>
+                                <div class="course-price">${{ number_format($course->price, 2) }}</div>
+                                <a href="{{ route('courses.show', $course->course_id) }}" class="course-btn">
+                                    View Details
+                                </a>
+                            </div>
                         </div>
                     </div>
                     @endforeach
                 </div>
 
                 <!-- Pagination -->
-                <div class="d-flex justify-content-center mt-5">
-                    {{ $courses->links() }}
+                <div class="custom-pagination">
+                    @if($courses->currentPage() > 1)
+                        <a href="{{ $courses->previousPageUrl() }}" class="pagination-item">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    @endif
+
+                    @for($i = 1; $i <= $courses->lastPage(); $i++)
+                        <a href="{{ $courses->url($i) }}" 
+                           class="pagination-item {{ $i == $courses->currentPage() ? 'active' : '' }}">
+                            {{ $i }}
+                        </a>
+                    @endfor
+
+                    @if($courses->hasMorePages())
+                        <a href="{{ $courses->nextPageUrl() }}" class="pagination-item">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    @endif
                 </div>
             @endif
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-        <div class="container text-center">
-            <p class="mb-0">&copy; 2024 Ezyskills. جميع الحقوق محفوظة.</p>
-        </div>
-    </footer>
+    @include('includes.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Filter functionality
+        document.querySelectorAll('.filter-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                // Add your filter logic here
+            });
+        });
+
+        // Search functionality
+        function filterCourses() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const courseItems = document.querySelectorAll('.course-item');
+
+            courseItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                if (title.includes(filter)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Sort functionality
+        function sortCourses() {
+            const select = document.getElementById('sortSelect');
+            const sortValue = select.value;
+            const grid = document.getElementById('coursesGrid');
+            const items = Array.from(document.querySelectorAll('.course-item'));
+
+            if (sortValue === 'price-asc') {
+                items.sort((a, b) => parseFloat(a.getAttribute('data-price')) - parseFloat(b.getAttribute('data-price')));
+            } else if (sortValue === 'price-desc') {
+                items.sort((a, b) => parseFloat(b.getAttribute('data-price')) - parseFloat(a.getAttribute('data-price')));
+            } else if (sortValue === 'title') {
+                items.sort((a, b) => a.getAttribute('data-title').localeCompare(b.getAttribute('data-title')));
+            }
+
+            items.forEach(item => grid.appendChild(item));
+        }
+    </script>
 </body>
 </html>

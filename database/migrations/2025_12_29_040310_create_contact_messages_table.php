@@ -19,6 +19,7 @@ return new class extends Migration
         $table->string('subject', 300)->nullable();
         $table->text('message');
         $table->timestamps();
+        $table->string('phone', 20)->nullable();
     });
 }
 

@@ -25,7 +25,8 @@ class ContactController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:200',
             'email' => 'required|email|max:255',
-            'subject' => 'nullable|string|max:300',
+            'phone' => 'nullable|string|max:20',
+            'subject' => 'required|string|max:300',
             'message' => 'required|string',
         ]);
 
@@ -34,10 +35,11 @@ class ContactController extends Controller
             'user_id' => Auth::id(), // null لو مش مسجل دخول
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'phone' => $validated['phone'],
             'subject' => $validated['subject'],
             'message' => $validated['message'],
         ]);
 
-        return redirect()->back()->with('success', 'تم إرسال رسالتك بنجاح! سنتواصل معك قريبًا.');
+        return redirect()->back()->with('success', 'Your message has been sent successfully! We will contact you soon.');
     }
 }

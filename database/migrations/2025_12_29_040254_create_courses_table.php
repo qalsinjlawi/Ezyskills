@@ -19,6 +19,15 @@ return new class extends Migration
         $table->decimal('price', 10, 2)->default(0);
         $table->integer('duration_hours')->nullable();
         $table->string('level', 50)->nullable();
+                    $table->enum('status', ['opened', 'coming_soon', 'archived'])->default('opened'); // ← أضف هذا السطر
+
+
+                    $table->json('objectives')->nullable();
+            $table->json('curriculum')->nullable();
+            $table->json('projects')->nullable();
+            $table->json('tools')->nullable();
+
+
         $table->foreignId('instructor_id')->constrained('instructors', 'instructor_id')->onDelete('cascade');
         $table->timestamps();
     });

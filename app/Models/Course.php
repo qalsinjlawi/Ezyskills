@@ -15,7 +15,20 @@ class Course extends Model
         'price',
         'duration_hours',
         'level',
+        'status',  
+        'objectives',      // ← جديد
+        'curriculum',      // ← جديد
+        'projects',        // ← جديد
+        'tools',       
         'instructor_id'
+    ];
+
+    // ← تحويل الحقول JSON تلقائياً
+    protected $casts = [
+        'objectives' => 'array',
+        'curriculum' => 'array',
+        'projects' => 'array',
+        'tools' => 'array',
     ];
 
     // علاقة الدورة بالمدرب
