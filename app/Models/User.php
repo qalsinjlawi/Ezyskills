@@ -21,8 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-         'phone',              // أضف هذا
-    'profile_image',      // وهذا
+        'role',
+        'phone',
+        'profile_image',
     ];
 
     /**
@@ -34,17 +35,34 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-    // علاقة المستخدم بالتسجيلات
-public function enrollments()
-{
-    return $this->hasMany(Enrollment::class);
-}
 
-// علاقة المستخدم بالرسائل
-public function contactMessages()
-{
-    return $this->hasMany(ContactMessage::class);
-}
+    // علاقة المستخدم بالتسجيلات
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    // علاقة المستخدم بالرسائل
+    public function contactMessages()
+    {
+        return $this->hasMany(ContactMessage::class);
+    }
+
+    // Helper methods للأدوار
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isTeacher()
+    {
+        return $this->role === 'teacher';
+    }
+
+    public function isStudent()
+    {
+        return $this->role === 'student';
+    }
 
     /**
      * Get the attributes that should be cast.

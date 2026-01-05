@@ -53,15 +53,17 @@
             flex-wrap: wrap;
         }
 
-        .filter-tabs .filter-item {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: #6B7280;
-            cursor: pointer;
-            padding: 8px 0;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
+       .filter-tabs .filter-item {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #6B7280;
+    cursor: pointer;
+    padding: 8px 0;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
 
         .filter-tabs .filter-item:hover {
             color: var(--primary-orange);
@@ -327,23 +329,34 @@
             </div>
 
             <!-- Filter Section -->
-            <div class="filter-section">
-                <div class="filter-tabs">
-                    <div class="filter-item active" data-filter="all">All</div>
-                    <div class="filter-item" data-filter="opened">Opened</div>
-                    <div class="filter-item" data-filter="coming-soon">Coming Soon</div>
-                    <div class="filter-item" data-filter="archived">Archived</div>
-                    <div class="filter-select">
-                        <select id="sortSelect" onchange="sortCourses()">
-                            <option value="">Sort by Progress Date</option>
-                            <option value="price-asc">Price: Low to High</option>
-                            <option value="price-desc">Price: High to Low</option>
-                            <option value="title">Title: A-Z</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
+<div class="filter-section">
+    <div class="filter-tabs">
+        <a href="{{ route('courses.index', ['status' => 'all'] + request()->except('status')) }}" 
+           class="filter-item {{ !request('status') || request('status') == 'all' ? 'active' : '' }}">
+            All
+        </a>
+        <a href="{{ route('courses.index', ['status' => 'opened'] + request()->except('status')) }}" 
+           class="filter-item {{ request('status') == 'opened' ? 'active' : '' }}">
+            Opened
+        </a>
+        <a href="{{ route('courses.index', ['status' => 'coming-soon'] + request()->except('status')) }}" 
+           class="filter-item {{ request('status') == 'coming-soon' ? 'active' : '' }}">
+            Coming Soon
+        </a>
+        <a href="{{ route('courses.index', ['status' => 'archived'] + request()->except('status')) }}" 
+           class="filter-item {{ request('status') == 'archived' ? 'active' : '' }}">
+            Archived
+        </a>
+        <div class="filter-select">
+            <select id="sortSelect" onchange="window.location.href='{{ route('courses.index') }}?status={{ request('status', 'all') }}&sort=' + this.value">
+                <option value="">Sort by Progress Date</option>
+                <option value="price-asc" {{ request('sort') == 'price-asc' ? 'selected' : '' }}>Price: Low to High</option>
+                <option value="price-desc" {{ request('sort') == 'price-desc' ? 'selected' : '' }}>Price: High to Low</option>
+                <option value="title" {{ request('sort') == 'title' ? 'selected' : '' }}>Title: A-Z</option>
+            </select>
+        </div>
+    </div>
+</div>
             <!-- Courses Grid -->
             @if($courses->count() == 0)
                 <div class="empty-state">
@@ -439,21 +452,27 @@
             });
         });
 
-        // Search functionality
-        function filterCourses() {
-            const input = document.getElementById('searchInput');
-            const filter = input.value.toLowerCase();
-            const courseItems = document.querySelectorAll('.course-item');
-
-            courseItems.forEach(item => {
-                const title = item.getAttribute('data-title');
-                if (title.includes(filter)) {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
+       function filterCourses() {
+        const input = document.getElementById('searchInput');
+        const searchValue = input.value;
+        const currentUrl = new URL(window.location.href);
+        
+        if (searchValue) {
+            currentUrl.searchParams.set('search', searchValue);
+        } else {
+            currentUrl.searchParams.delete('search');
         }
+        
+        window.location.href = currentUrl.toString();
+    }
+
+    // Allow Enter key for search
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            filterCourses();
+        }
+    });
+        
 
         // Sort functionality
         function sortCourses() {

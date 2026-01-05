@@ -10,6 +10,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,           // أضف هذا السطر
+            CategorySeeder::class,          // ← أضف هنا
             InstructorSeeder::class,
             CourseSeeder::class,
             PricingPlanSeeder::class,

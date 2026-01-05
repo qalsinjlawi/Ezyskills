@@ -15,15 +15,15 @@ class Course extends Model
         'price',
         'duration_hours',
         'level',
-        'status',  
-        'objectives',      // ← جديد
-        'curriculum',      // ← جديد
-        'projects',        // ← جديد
-        'tools',       
-        'instructor_id'
+        'status',
+        'objectives',
+        'curriculum',
+        'projects',
+        'tools',
+        'instructor_id',
+        'category_id'
     ];
 
-    // ← تحويل الحقول JSON تلقائياً
     protected $casts = [
         'objectives' => 'array',
         'curriculum' => 'array',
@@ -31,13 +31,16 @@ class Course extends Model
         'tools' => 'array',
     ];
 
-    // علاقة الدورة بالمدرب
     public function instructor()
     {
         return $this->belongsTo(Instructor::class, 'instructor_id', 'instructor_id');
     }
 
-    // علاقة الدورة بالتسجيلات
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'category_id');
+    }
+
     public function enrollments()
     {
         return $this->hasMany(Enrollment::class, 'course_id', 'course_id');

@@ -71,7 +71,7 @@ class CourseSeeder extends Seeder
             'price' => 149.99,
             'duration_hours' => 60,
             'level' => 'Advanced',
-            'status' => 'opened',
+            'status' => 'archived',
             'instructor_id' => 2,
             'objectives' => [
                 'Master AWS core services and architecture',

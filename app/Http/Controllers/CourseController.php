@@ -13,17 +13,17 @@ class CourseController extends Controller
         $query = Course::with('instructor');
         
         // فلترة حسب الحالة (status)
-        if ($request->has('status') && $request->status != 'all') {
+        if ($request->filled('status') && $request->status != 'all') {
             $query->where('status', $request->status);
         }
         
         // بحث حسب العنوان
-        if ($request->has('search') && $request->search != '') {
+        if ($request->filled('search')) {
             $query->where('title', 'like', '%' . $request->search . '%');
         }
         
         // ترتيب النتائج
-        if ($request->has('sort')) {
+        if ($request->filled('sort')) {
             switch ($request->sort) {
                 case 'price-asc':
                     $query->orderBy('price', 'asc');
@@ -41,7 +41,7 @@ class CourseController extends Controller
             $query->latest();
         }
         
-        $courses = $query->paginate(12);
+        $courses = $query->paginate(12)->appends($request->all());
         
         return view('courses.index', compact('courses'));
     }
