@@ -16,7 +16,7 @@
         .main-header .nav-container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 0.75rem 1rem;
+            padding: 0.25rem 0.25rem;
         }
         
         .main-header .nav-flex {
@@ -49,7 +49,7 @@
             color: #374151;
             font-weight: 500;
             transition: color 0.2s;
-            font-size: 0.875rem;
+            font-size: 1rem;
             text-decoration: none;
         }
         
@@ -74,13 +74,13 @@
         }
         
         .main-header .btn-login {
-            padding: 0.5rem 1.25rem;
+            padding: 0.625rem 1.5rem;
             color: #f97316;
             font-weight: 500;
             transition: color 0.2s;
             border: 1px solid #f97316;
             border-radius: 0.375rem;
-            font-size: 0.875rem;
+            font-size: 1rem;
             text-decoration: none;
             display: inline-block;
         }
@@ -91,14 +91,14 @@
         }
         
         .main-header .btn-register {
-            padding: 0.625rem 1.5rem;
+            padding: 0.75rem 1.75rem;
             background-color: #f97316;
             color: white;
             border-radius: 0.375rem;
             font-weight: 500;
             transition: background-color 0.2s;
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            font-size: 0.875rem;
+            font-size: 1rem;
             text-decoration: none;
             display: inline-block;
             border: none;
@@ -150,31 +150,7 @@
             <!-- Logo -->
             <div style="display: flex; align-items: center;">
                 <a href="{{ route('home') }}" class="logo-link">
-                    <!-- Hexagon Logo -->
-                    <div style="position: relative; width: 3rem; height: 3rem; margin-right: 0.75rem;">
-                        <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
-                            <defs>
-                                <linearGradient id="hexGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="url(#hexGradient)"/>
-                            <circle cx="50" cy="45" r="12" fill="white"/>
-                            <rect x="44" y="60" width="12" height="8" rx="2" fill="white"/>
-                            <path d="M 35 38 L 42 45 L 35 52" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M 65 38 L 58 45 L 65 52" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    
-                    <!-- Logo Text -->
-                    <div>
-                        <div style="display: flex; align-items: baseline;">
-                            <span style="font-size: 1.5rem; font-weight: 700; color: #2563eb;">EZY</span>
-                            <span style="font-size: 1.5rem; font-weight: 700; color: #1f2937;">SKILLS</span>
-                        </div>
-                        <p style="font-size: 0.75rem; color: #6b7280; margin-top: -0.25rem;">Online Learning</p>
-                    </div>
+                    <img src="{{ asset('images/logo.png') }}" alt="EzySkills Logo" style="height: 7rem; width: auto; object-fit: contain;">
                 </a>
             </div>
 
@@ -200,15 +176,28 @@
             <!-- Auth Buttons -->
             <div class="auth-buttons">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        Dashboard
-                    </a>
-                    <form method="POST" action="{{ route('logout') }}" style="display: inline; margin: 0;">
-                        @csrf
-                        <button type="submit" class="btn-register">
-                            Logout
+                    <div style="position: relative;">
+                        <button id="profile-dropdown-btn" style="display: flex; align-items: center; gap: 0.5rem; background: none; border: none; cursor: pointer; padding: 0.5rem;">
+                            @if(Auth::user()->profile_image)
+                                <img src="{{ asset('/' . Auth::user()->profile_image) }}" style="width: 3rem; height: 3rem; border-radius: 50%; object-fit: cover;" alt="Profile">
+                            @else
+                                <div style="width: 2rem; height: 2rem; border-radius: 50%; background: linear-gradient(to bottom right, #fb923c, #ea580c); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </div>
+                            @endif
+                            <svg style="width: 1rem; height: 1rem; color: #374151;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
                         </button>
-                    </form>
+                        
+                        <div id="profile-dropdown" style="display: none; position: absolute; right: 0; top: 100%; background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); min-width: 12rem; margin-top: 0.5rem; z-index: 50;">
+                            <a href="{{ route('profile.edit') }}" style="display: block; padding: 0.75rem 1rem; color: #374151; text-decoration: none; border-bottom: 1px solid #e5e7eb;">Profile</a>
+                            <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                                @csrf
+                                <button type="submit" style="width: 100%; text-align: left; padding: 0.75rem 1rem; background: none; border: none; color: #374151; cursor: pointer;">Logout</button>
+                            </form>
+                        </div>
+                    </div>
                 @else
                     <a href="{{ route('login') }}" class="btn-login">
                         Log in
@@ -247,12 +236,12 @@
                 </a>
                 
                 @auth
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        Dashboard
+                    <a href="{{ route('profile.edit') }}" class="nav-link">
+                        Profile
                     </a>
                     <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
                         @csrf
-                        <button type="submit" class="nav-link" style="width: 100%; text-align: left; cursor: pointer;">
+                        <button type="submit" class="nav-link" style="width: 100%; text-align: left; cursor: pointer; background: none; border: none; padding: 0;">
                             Logout
                         </button>
                     </form>
@@ -278,6 +267,21 @@
         if (menuButton && mobileMenu) {
             menuButton.addEventListener('click', function() {
                 mobileMenu.classList.toggle('show');
+            });
+        }
+        
+        // Profile Dropdown Toggle
+        const profileBtn = document.getElementById('profile-dropdown-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
+
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                profileDropdown.style.display = profileDropdown.style.display === 'none' ? 'block' : 'none';
+            });
+
+            document.addEventListener('click', function() {
+                profileDropdown.style.display = 'none';
             });
         }
         

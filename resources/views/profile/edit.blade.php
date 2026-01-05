@@ -1,5 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
+        
         <div class="flex items-center justify-between">
             <div class="flex items-center">
                 <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-xl font-bold shadow-lg">

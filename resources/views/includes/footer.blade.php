@@ -2,7 +2,7 @@
     <style>
         /* Footer Protection - High Specificity */
         footer.ezy-footer {
-            background: linear-gradient(to bottom right, #1e3a8a, #1e40af) !important;
+            background: #003F7D;
             color: white !important;
             padding: 3rem 0 !important;
             margin: 0 !important;
@@ -266,20 +266,9 @@
         <div class="footer-grid">
             <!-- Left Section: Logo + About -->
             <div>
-                <div class="logo-section">
-                    <div class="logo-icon">
-                        <svg fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-                        </svg>
-                    </div>
-                    <div class="logo-text">
-                        <h2>
-                            <span class="brand-ezy">EZY</span>
-                            <span class="brand-skills">SKILLS</span>
-                        </h2>
-                        <p>ONLINE COURSES</p>
-                    </div>
-                </div>
+               <div class="logo-section">
+    <img src="{{ asset('images/logof.png') }}" alt="EzySkills Logo" style="height: 4rem !important; width: auto !important; object-fit: contain !important;">
+</div>
                 <p class="description">
                     Let us build your career together. Be the first person to transform yourself with our unique & world class corporate level trainings.
                 </p>
