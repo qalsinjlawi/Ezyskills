@@ -34,7 +34,9 @@ Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 // صفحة التواصل
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

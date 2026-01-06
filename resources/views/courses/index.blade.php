@@ -228,8 +228,8 @@
         .custom-pagination {
             display: flex;
             justify-content: center;
-            gap: 10px;
             margin-top: 40px;
+    margin-bottom: 60px;
         }
 
         .pagination-item {
@@ -278,7 +278,33 @@
         .empty-state p {
             color: #9CA3AF;
         }
+/* Custom Scrollbar to match the orange theme */
 
+/* For Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 12px; /* عرض الشريط العمودي */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* خلفية التراك فاتحة */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-orange); /* اللون البرتقالي الرئيسي */
+    border-radius: 10px;
+    border: 3px solid #f1f1f1; /* مسافة حول الـ thumb عشان يبدو أنيق */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--light-orange); /* لون أفتح لما تمرر الماوس عليه */
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin; /* شريط رفيع */
+    scrollbar-color: var(--primary-orange) #f1f1f1; /* thumb برتقالي، track فاتح */
+}
         /* Responsive */
         @media (max-width: 768px) {
             .page-title {

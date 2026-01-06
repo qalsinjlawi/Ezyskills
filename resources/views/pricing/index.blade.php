@@ -10,254 +10,205 @@
     <style>
         :root {
             --primary-orange: #FF7A59;
-            --dark-blue: #003D82;
-            --card-blue: #004A99;
+            --light-orange: #FF9478;
+            --bg-light: #F8F9FA;
         }
 
-        .pricing-body {
-            background: linear-gradient(180deg, #1565C0 0%, #0D47A1 100%);
-            min-height: calc(100vh - 80px);
-            padding: 60px 0 0;
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Hero Section */
+        .pricing-hero {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--light-orange) 100%);
+            padding: 60px 0 80px;
             position: relative;
             overflow: hidden;
+            border-radius: 0 0 50px 50px;
         }
 
-        /* Curved Shape at Bottom */
-        .pricing-body::after {
+        .pricing-hero::before {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 180px;
-            background: #FAFAFA;
-            border-radius: 50% 50% 0 0 / 90px 90px 0 0;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .pricing-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .pricing-hero h1 {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0;
+            position: relative;
             z-index: 1;
         }
 
-        /* Decorative Dots - Left */
-        .dots-left {
+        .pricing-hero h1 span {
+            color: #FFE082;
+        }
+
+        /* Decorative Dots */
+        .dots-decoration {
             position: absolute;
-            left: 60px;
+            right: 30px;
             top: 50%;
             transform: translateY(-50%);
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 1;
         }
 
-        .dots-left .dot {
-            width: 10px;
-            height: 10px;
+        .dots-decoration span {
+            display: block;
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.4);
             border-radius: 50%;
-            background: #FF7043;
         }
 
-        /* Decorative Dots - Right */
-        .dots-right {
-            position: absolute;
-            right: 60px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            z-index: 2;
-        }
-
-        .dots-right .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #FF7043;
-        }
-
-        /* Page Title */
-        .pricing-header {
-            text-align: center;
-            margin-bottom: 70px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .pricing-title {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: white;
-            margin: 0;
-        }
-
-        .pricing-title span {
-            color: #FF9800;
+        .dots-row {
+            display: flex;
+            gap: 8px;
         }
 
         /* Pricing Container */
         .pricing-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: -20px;
             position: relative;
-            z-index: 10;
-            padding: 0 20px;
+            max-width: 1100px;
+            margin: -40px auto 80px;
+            padding: 0 15px;
+        }
+
+        /* Pricing Cards Wrapper */
+        .pricing-cards-wrapper {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
         }
 
         /* Pricing Card */
         .pricing-card {
-            background: white;
-            border-radius: 20px 20px 0 0;
-            padding: 40px 30px 30px;
-            width: 300px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 15px;
+            padding: 35px 25px;
             text-align: center;
             position: relative;
-            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.12);
-            min-height: 380px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin: 0 -10px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
         }
 
-        /* First Card (Orange) */
-        .pricing-card:first-child {
-            margin-top: 50px;
-            background: linear-gradient(135deg, #FF8A65 0%, #FF7043 100%);
-            z-index: 3;
+        .pricing-card:hover {
+            border-color: var(--primary-orange);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 122, 89, 0.15);
         }
 
-        .pricing-card:first-child * {
-            color: white !important;
-        }
-
-        .pricing-card:first-child .plan-badge {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .pricing-card:first-child .btn-choose {
-            background: transparent;
-            border-color: white;
-            color: white;
-        }
-
-        .pricing-card:first-child .btn-choose:hover {
-            background: white;
-            color: #FF7043;
-        }
-
-        /* Middle Card (White - Featured/Taller) */
+        /* Featured Card */
         .pricing-card.featured {
-            background: white;
-            width: 340px;
-            padding: 50px 35px 35px;
-            margin-top: 0;
-            z-index: 4;
-            min-height: 420px;
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--light-orange) 100%);
+            border-color: var(--primary-orange);
+            transform: scale(1.05);
         }
 
-        .pricing-card.featured .plan-badge {
-            background: rgba(255, 138, 101, 0.15);
-            color: #FF7043;
+        .pricing-card.featured:hover {
+            transform: scale(1.08) translateY(-5px);
         }
 
-        .pricing-card.featured .price-amount {
-            color: #FF7043;
-        }
-
-        /* Last Card (Orange) */
-        .pricing-card:last-child {
-            margin-top: 50px;
-            background: linear-gradient(135deg, #FF8A65 0%, #FF7043 100%);
-            z-index: 3;
-        }
-
-        .pricing-card:last-child * {
+        .pricing-card.featured * {
             color: white !important;
         }
 
-        .pricing-card:last-child .plan-badge {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .pricing-card:last-child .btn-choose {
-            background: transparent;
-            border-color: white;
-            color: white;
-        }
-
-        .pricing-card:last-child .btn-choose:hover {
-            background: white;
-            color: #FF7043;
-        }
-
-        /* Plan Name Badge */
+        /* Plan Badge */
         .plan-badge {
-            background: rgba(255, 138, 101, 0.15);
-            color: #666;
+            background: rgba(255, 122, 89, 0.15);
+            color: var(--primary-orange);
             font-size: 0.85rem;
             font-weight: 600;
             padding: 8px 20px;
             border-radius: 20px;
             display: inline-block;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+        }
+
+        .pricing-card.featured .plan-badge {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
         }
 
         /* Price */
         .price-section {
-            margin-bottom: 35px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            margin-bottom: 30px;
         }
 
         .price-amount {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            color: #FF7043;
+            color: var(--primary-orange);
             line-height: 1.1;
         }
 
         .pricing-card.featured .price-amount {
-            font-size: 3.2rem;
+            color: white;
         }
 
         .price-currency {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-right: 5px;
             font-weight: 600;
         }
 
         .price-tax {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            color: #6B7280;
             margin-left: 6px;
             font-weight: 500;
         }
 
         .pricing-card.featured .price-tax {
-            color: #999;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .price-note {
             font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.85);
-            margin-top: 6px;
+            color: #9CA3AF;
+            margin-top: 8px;
         }
 
         .pricing-card.featured .price-note {
-            color: #999;
+            color: rgba(255, 255, 255, 0.85);
         }
 
         /* Button */
         .btn-choose {
             width: 100%;
             padding: 13px;
-            border: 2px solid #FF7043;
+            border: 2px solid var(--primary-orange);
             background: white;
-            color: #FF7043;
+            color: var(--primary-orange);
             border-radius: 10px;
             font-weight: 600;
             font-size: 0.95rem;
@@ -267,48 +218,117 @@
         }
 
         .btn-choose:hover {
-            background: #FF7043;
+            background: var(--primary-orange);
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 112, 67, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 122, 89, 0.3);
+        }
+
+        .pricing-card.featured .btn-choose {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .pricing-card.featured .btn-choose:hover {
+            background: #FF8263;
+            color: #FF8263;
+            transform: translateY(-2px);
         }
 
         /* Powered by */
         .powered-by {
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.8);
+            color: #9CA3AF;
             font-weight: 600;
         }
 
         .pricing-card.featured .powered-by {
-            color: #999;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Circle Decoration */
+        .circle-decoration {
+            position: fixed;
+            bottom: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--light-orange) 100%);
+            border-radius: 50%;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #9CA3AF;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #6B7280;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-orange);
+            border-radius: 10px;
+            border: 3px solid #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--light-orange);
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-orange) #f1f1f1;
         }
 
         /* Responsive */
-        @media (max-width: 992px) {
-            .dots-left, .dots-right {
+        @media (max-width: 768px) {
+            .pricing-hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .pricing-cards-wrapper {
+                padding: 30px 20px;
+            }
+
+            .pricing-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-5px);
+            }
+
+            .dots-decoration {
                 display: none;
             }
 
-            .pricing-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 25px;
-            }
-
-            .pricing-card,
-            .pricing-card.featured {
-                width: 100%;
-                max-width: 350px;
-                margin: 0 !important;
-            }
-
-            .pricing-body {
-                padding: 40px 0 0;
-            }
-
-            .pricing-title {
-                font-size: 2rem;
+            .circle-decoration {
+                width: 250px;
+                height: 250px;
+                bottom: -50px;
+                left: -50px;
             }
         }
     </style>
@@ -317,56 +337,63 @@
     <!-- Header -->
     @include('includes.header')
 
+    <!-- Hero Section -->
+    <div class="pricing-hero">
+        <div class="container text-center">
+            <h1>Our <span>Pricing</span></h1>
+        </div>
+        
+        <!-- Decorative Dots -->
+        <div class="dots-decoration">
+            @for($i = 0; $i < 7; $i++)
+                <div class="dots-row">
+                    @for($j = 0; $j < 3; $j++)
+                        <span></span>
+                    @endfor
+                </div>
+            @endfor
+        </div>
+    </div>
+
     <!-- Pricing Section -->
-    <div class="pricing-body">
-        <!-- Decorative Dots - Left -->
-        <div class="dots-left">
-            @for($i = 0; $i < 16; $i++)
-                <div class="dot"></div>
-            @endfor
-        </div>
-
-        <!-- Decorative Dots - Right -->
-        <div class="dots-right">
-            @for($i = 0; $i < 16; $i++)
-                <div class="dot"></div>
-            @endfor
-        </div>
-
-        <div class="container">
-            <div class="pricing-header">
-                <h1 class="pricing-title">Our <span>Pricing</span></h1>
-            </div>
-
-            <div class="pricing-container">
+    <section class="pricing-section">
+        <div class="pricing-container">
+            <div class="pricing-cards-wrapper">
                 @forelse($plans as $index => $plan)
-                <div class="pricing-card {{ $index == 1 ? 'featured' : '' }}">
-                    <div>
-                        <div class="plan-badge">{{ $plan->name }}</div>
-                        
-                        <div class="price-section">
-                            <div>
-                                <span class="price-currency">₹</span>
-                                <span class="price-amount">{{ number_format($plan->price, 0, '', ',') }}</span>
-                                <span class="price-tax">+ Tax</span>
-                            </div>
-                            <div class="price-note">(Exclusive of GST & Taxes)</div>
-                        </div>
-                    </div>
+                    @if($plans->count() > 0)
+                        <div class="pricing-cards">
+                            @foreach($plans as $idx => $p)
+                                <div class="pricing-card {{ $idx == 1 ? 'featured' : '' }}">
+                                    <div class="plan-badge">{{ $p->name }}</div>
+                                    
+                                    <div class="price-section">
+                                        <div>
+                                            <span class="price-currency">₹</span>
+                                            <span class="price-amount">{{ number_format($p->price, 0, '', ',') }}</span>
+                                            <span class="price-tax">+ Tax</span>
+                                        </div>
+                                        <div class="price-note">(Exclusive of GST & Taxes)</div>
+                                    </div>
 
-                    <div>
-                        <button class="btn-choose">Choose Plan</button>
-                        <div class="powered-by">#Nowayy</div>
-                    </div>
-                </div>
+                                    <button class="btn-choose">Choose Plan</button>
+                                    <div class="powered-by">#Nowayy</div>
+                                </div>
+                            @endforeach
+                        </div>
+                        @php break; @endphp
+                    @endif
                 @empty
-                <div class="text-center">
-                    <p style="color: white;">No pricing plans available.</p>
-                </div>
+                    <div class="empty-state">
+                        <h3>No Pricing Plans Available</h3>
+                        <p>No pricing plans have been added yet. Please check back later.</p>
+                    </div>
                 @endforelse
             </div>
         </div>
-    </div>
+
+        <!-- Circle Decoration -->
+        <div class="circle-decoration"></div>
+    </section>
 
     <!-- Footer -->
     @include('includes.footer')

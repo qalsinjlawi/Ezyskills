@@ -6,6 +6,35 @@
     <title>Ezyskills - Online Learning Platform</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+<style>
+/* Custom Scrollbar - Orange & Blue Theme */
+
+/* Webkit browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 12px; /* عرض الشريط */
+}
+
+::-webkit-scrollbar-track {
+    background: #f3f4f6; /* رمادي فاتح زي خلفية الموقع */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #f97316; /* برتقالي أساسي orange-500 */
+    border-radius: 10px;
+    border: 3px solid #f3f4f6; /* مسافة عشان يبدو أنيق */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff7a59; /* برتقالي أفتح لما الماوس عليه */
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #f97316 #f3f4f6;
+}
+</style>
 <body class="font-sans antialiased bg-white">
     
     <!-- Header -->
@@ -141,7 +170,8 @@
                                     <circle cx="20" cy="20" r="18" fill="#1e40af"/>
                                     <path d="M15 15 L25 20 L15 25 Z" fill="white"/>
                                 </svg>
-                                <span class="text-blue-900 font-bold text-lg">EZYSKILLS</span>
+                                <span class="text-blue-900 font-bold text-lg">EZYSKILLS
+</span>
                             </div>
                             <h3 class="text-2xl font-bold text-orange-500 mb-6">AI Based<br>Course<br>Selector</h3>
                             <div class="flex justify-center">
